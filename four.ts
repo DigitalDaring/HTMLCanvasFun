@@ -1,14 +1,6 @@
+import { Circle } from './models/circle';
 
 const funStuff = () => {
-    type Circle = {
-        x: number;
-        y: number;
-        speed: number;
-        maxRadius: number;
-        currentRadius: number;
-        thickness: number;
-    }
-
     const canvas = document.getElementById('draw-on-me') as HTMLCanvasElement;
     const currentContext = canvas.getContext('2d') as CanvasRenderingContext2D;
     const circles = [] as Array<Circle>;
@@ -77,8 +69,6 @@ const funStuff = () => {
             enlargeCircle(circle);
         })
     }
-
-
 
     const queueNextCircle = () => {
         let nextTimeout = Math.random() * 200 + 50;
