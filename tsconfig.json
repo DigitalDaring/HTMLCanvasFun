@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/client",
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "allowJs": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "shared/types/*"
+      ]
+    }
+  }
+}

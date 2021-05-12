@@ -1,0 +1,17 @@
+{
+  "name": "canvas-fun",
+  "version": "1.0.0",
+  "description": "Fun with HTML Canvas",
+  "main": "server.js",
+  "scripts": {
+    "start": "parcel build *.html && node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "typescript": "^3.5.3",
+    "parcel-bundler": "^1.12.3"
+  },
+  "author": "Edmund Bates",
+  "license": "UNLICENSED"
+}
