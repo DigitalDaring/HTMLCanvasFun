@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>HTML Canvas Fun</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+        <style>
+            html, body {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            canvas#input {
+                opacity: 0;
+            }
+
+            canvas#output {
+                opacity: 0;
+            }
+
+            canvas, video, img {
+                position: absolute;
+                top: 180px;
+            }
+
+            video {
+                z-index: 999;
+            }
+
+            canvas {
+                z-index: 800;
+            }
+
+            img {
+                z-index: 80;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Camera Inputs!</h1>
+        <h2>Why not filter your live video?</h2>
+        <a id="switch-filter-button"> 🚀</a>
+        <a id="take-picture-button"> 📷 </a>
+        <video id="video" autoplay controls crossorigin="anonymous" loop></video>
+        <canvas id="input" width="640px" height="480px"></canvas>
+        <canvas id="output" width="640px" height="480px"></canvas>
+        <img src="~/content/my_room.png" width="640px" height="480px"/>
+        <script src="seven.ts"></script>
+    </body>
+</html>
