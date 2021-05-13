@@ -4,7 +4,7 @@
   "description": "Fun with HTML Canvas",
   "main": "server.js",
   "scripts": {
-    "start": "parcel build *.html && node server.js",
+    "start": "rm -rf dist && parcel build *.html && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "browserslist": [

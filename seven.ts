@@ -1,3 +1,7 @@
+import grayScale from './filters/gray-scale';
+import hardRamp from './filters/hard-ramp';
+import solarize from './filters/solarize';
+
 const funStuff = () => {
     const video = document.getElementById('video') as HTMLVideoElement;
     const inputCanvas = document.getElementById('input') as HTMLCanvasElement;
@@ -25,18 +29,6 @@ const funStuff = () => {
         return rgba;
     }
 
-    const hardRamp = (column, row, rgba) => {
-        const [r,g,b,a] = rgba;
-        const biggest = Math.max(r,g,b);
-        const highlow = biggest > 125 ? 255 : 0;
-        return [highlow, highlow, highlow, 255];
-    }
-
-    const grayScale = (column, row, rgba) => {
-        const [r,g,b,a] = rgba;
-        const biggest = Math.max(r,g,b);
-        return [biggest, biggest, biggest, 255];
-    }
 
     const ghosting = (column, row, rgba) => {
         const [r,g,b,a] = rgba;
@@ -53,7 +45,18 @@ const funStuff = () => {
         }
     }
 
-    const filtersKinda = [noChange, hardRamp, grayScale, ghosting, greenScreen];
+    const solarPlusGreenScreen = (column, row, rgba) => {
+        const solar = solarize(column,row, rgba);
+        return greenScreen(column, row, solar);
+    }
+
+    const doubleReverse = (column, row, rgba) => {
+        const solar = solarize(column,row,rgba);
+        const greenSolar = greenScreen(column, row, solar);
+        return solarize(column, row, greenSolar);
+    }
+
+    const filtersKinda = [noChange, solarize, hardRamp, grayScale, ghosting, greenScreen, solarPlusGreenScreen, doubleReverse];
     let currentFilter = 0;
 
     const stylizeImage = (frame) => {

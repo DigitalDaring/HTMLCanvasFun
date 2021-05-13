@@ -19,6 +19,14 @@ const funStuff = () => {
         return rgba;
     }
 
+    const solarize = (column, row, rgba) => {
+        const [r,g,b,a] = rgba;
+        const solarR = 255 - r;
+        const solarG = 255 - g;
+        const solarB = 255 - b;
+        return [solarR, solarG, solarB, a];
+    }
+
     const hardRamp = (column, row, rgba) => {
         const [r,g,b,a] = rgba;
         const biggest = Math.max(r,g,b);
@@ -38,7 +46,7 @@ const funStuff = () => {
         return [r,g,b,newA];
     }
 
-    const filtersKinda = [noChange, hardRamp, grayScale, pixelated];
+    const filtersKinda = [noChange, solarize, hardRamp, grayScale, pixelated];
     let currentFilter = 0;
 
     const stylizeImage = (frame) => {
