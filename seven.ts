@@ -21,6 +21,10 @@ const funStuff = () => {
         outputContext.putImageData(imageData, 0, 0);
     }
 
+    const noChange = (column, row, rgba) => {
+        return rgba;
+    }
+
     const hardRamp = (column, row, rgba) => {
         const [r,g,b,a] = rgba;
         const biggest = Math.max(r,g,b);
@@ -49,7 +53,7 @@ const funStuff = () => {
         }
     }
 
-    const filtersKinda = [hardRamp, grayScale, ghosting, greenScreen];
+    const filtersKinda = [noChange, hardRamp, grayScale, ghosting, greenScreen];
     let currentFilter = 0;
 
     const stylizeImage = (frame) => {
