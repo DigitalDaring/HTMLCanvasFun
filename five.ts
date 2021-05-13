@@ -11,7 +11,7 @@ const funStuff = () => {
 
     for(let i =0; i < 10; i++) {
         const newCircle = {
-            x: i * 100 + 10,
+            x: i * 100 + 100,
             y: 100,
             speed: 1,
             maxRadius: 50,
@@ -20,8 +20,6 @@ const funStuff = () => {
         } as Circle;
         circles.push(newCircle);
     }
-
-    console.log(circles.length);
 
     const AudioController = (beatResolution: number) => {
         const audioContext = new window.AudioContext();
@@ -130,7 +128,6 @@ const funStuff = () => {
 
     let audioController = AudioController(10);
     const dropLocation = document.getElementById('drop-on-me');
-    console.log(dropLocation);
 
     dropLocation.ondragover = (e) => {
         e.preventDefault();
@@ -156,11 +153,9 @@ const funStuff = () => {
 
             const drumsTrack = new Track("complete", false, data)
             drumsTrack.OnBeat(function (hzGroup, volume) {
-                var vol = Math.floor(volume);
-                console.log(`${hzGroup} - ${vol}`);
-                //AllShapes[hzGroup].SetSize(vol);
+                const vol = Math.floor(volume); // between 0 and 255
                 const targetCircle = circles[hzGroup];
-                targetCircle.currentRadius = targetCircle.maxRadius * (vol / 255);
+                targetCircle.currentRadius = Math.max(targetCircle.maxRadius * (vol / 255), 0);
             });
 
             audioController.PlayTrackList([drumsTrack]);
@@ -170,12 +165,6 @@ const funStuff = () => {
                 circles.forEach(circle => {
                    drawCircle(currentContext, circle, true);
                 });
-                /*CanvasHooks.ClearContext();
-                for (var i = AllShapes.length - 1; i >= 0; i--) {
-
-                    AllShapes[i].Draw();
-                    AllShapes[i].Shrink();
-                }*/
             });
 
 
@@ -185,7 +174,8 @@ const funStuff = () => {
             {
                 filename = droppedFiles[0].name;
             }
-            console.log(filename);
+
+            dropLocation.innerText = filename;
         }
 
         reader.readAsArrayBuffer(droppedFiles[0]);
@@ -195,6 +185,8 @@ const funStuff = () => {
         circles.forEach(circle => {
            if (circle.currentRadius > 1) {
                circle.currentRadius-=.5;
+           } else {
+               circle.currentRadius = 1;
            }
         });
     }, 1000/60);
