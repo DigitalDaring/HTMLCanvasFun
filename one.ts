@@ -17,7 +17,7 @@ const funStuff = () => {
     }
 
     const drawRectangle = (ctx: CanvasRenderingContext2D, x, y, width, height) => {
-        ctx.strokeRect(x, y, width, height);
+        ctx.fillRect(x, y, width, height);
     }
 
     const drawText = (ctx: CanvasRenderingContext2D, text, x, y) => {
