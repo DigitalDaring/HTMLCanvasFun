@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>HTML Canvas Fun</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+        <style>
+            html, body {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            canvas#input {
+                opacity: 0;
+            }
+
+            canvas#output {
+                opacity: 0;
+            }
+
+            canvas, video {
+                position: absolute;
+                top: 180px;
+            }
+
+            video {
+                z-index: 999;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Messing with video files!</h1>
+        <h2>Goofing with pixel data frame by frame.</h2>
+        <a id="switch-filter-button">  🚀  </a>
+        <video id="video" controls src="~/content/small_candle.mov" crossorigin="anonymous" loop></video>
+        <canvas id="input" width="640px" height="360px"></canvas>
+        <canvas id="output" width="640px" height="360px"></canvas>
+        <script src="six.ts"></script>
+    </body>
+</html>
