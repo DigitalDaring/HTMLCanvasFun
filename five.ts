@@ -3,6 +3,10 @@ import drawCircle from './draw/draw-circle';
 import wipeTheCanvasClean from './draw/wipe-the-canvas-clean';
 import Track from './models/track';
 
+const client_id = process.env.SOUNDCLOUD_CLIENT_ID;
+
+const soundcloudTrackUrl = `http://api.soundcloud.com/tracks/299874613/stream?client_id=${client_id}`;
+
 const funStuff = () => {
     const canvas = document.getElementById('draw-on-me') as HTMLCanvasElement;
     const currentContext = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -128,6 +132,7 @@ const funStuff = () => {
 
     let audioController = AudioController(10);
     const dropLocation = document.getElementById('drop-on-me');
+    const clickToPlay = document.getElementById('click-to-play-soundcloud');
 
     dropLocation.ondragover = (e) => {
         e.preventDefault();
@@ -167,7 +172,6 @@ const funStuff = () => {
                 });
             });
 
-
             let filename = 'an unknown file';
 
             if(droppedFiles[0].name)
@@ -179,6 +183,30 @@ const funStuff = () => {
         }
 
         reader.readAsArrayBuffer(droppedFiles[0]);
+    };
+
+    clickToPlay.onclick = (e) => {
+        audioController.StopAll();
+        audioController = null
+        audioController = AudioController(10);
+
+        const soundCloudTrack = new Track('From Soundcloud', soundcloudTrackUrl, []);
+        soundCloudTrack.OnBeat(function (hzGroup, volume) {
+            const vol = Math.floor(volume); // between 0 and 255
+            const targetCircle = circles[hzGroup];
+            targetCircle.currentRadius = Math.max(targetCircle.maxRadius * (vol / 255), 0);
+        });
+
+        audioController.PlayTrackList([soundCloudTrack]);
+
+        audioController.SetOnEveryFrame(() => {
+            wipeTheCanvasClean(currentContext);
+            circles.forEach(circle => {
+                drawCircle(currentContext, circle, true);
+            });
+        });
+
+        dropLocation.innerText = 'Now playing from SoundCloud!';
     };
 
     window.setInterval(() => {

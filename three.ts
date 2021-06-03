@@ -1,6 +1,6 @@
 import drawRectangle from './draw/draw-rectangle';
 
-const funStuff = () => {
+const pageThreeStuff = () => {
     let currentAngle = 0;
     let currentGrey = 0;
     let isLightening = false;
@@ -36,8 +36,9 @@ const funStuff = () => {
         ctx.fillRect(0, 0, 300, 300);
     }
 
-    const sixtyFPS = 1000 / 60;
-    window.setInterval(() => {
+
+    const catchAnimationFrame = () => {
+        window.requestAnimationFrame(catchAnimationFrame);
         drawCenteredFrame(currentContextNotCleared, 100, 100, 50, 50);
         wipeTheCanvasClean(currentContextCleared);
         drawCenteredFrame(currentContextCleared, 100, 100, 50, 50);
@@ -62,9 +63,9 @@ const funStuff = () => {
                 isLightening = true;
             }
         }
+    }
 
-
-    }, sixtyFPS)
+    window.requestAnimationFrame(catchAnimationFrame);
 }
 
-window.onload = funStuff;
+window.onload = pageThreeStuff;

@@ -1,6 +1,6 @@
 import drawText from './draw/draw-text';
 
-const funStuff = async () => {
+const pageTwoStuff = async () => {
     const canvas = document.getElementById('draw-on-me') as HTMLCanvasElement;
     const currentContext = canvas.getContext('2d') as CanvasRenderingContext2D;
     currentContext.strokeStyle = `rgba(0,0,0,255)`;
@@ -24,4 +24,4 @@ const funStuff = async () => {
     currentContext.rotate(-radians);
 }
 
-window.onload = funStuff;
+window.onload = pageTwoStuff;

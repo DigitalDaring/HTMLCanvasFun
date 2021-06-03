@@ -1,7 +1,8 @@
-const funStuff = () => {
+const pageOneStuff = () => {
     const canvas = document.getElementById('draw-on-me') as HTMLCanvasElement;
     const currentContext = canvas.getContext('2d') as CanvasRenderingContext2D;
     currentContext.strokeStyle = `rgba(0,0,0,255)`;
+
     const drawLine = (ctx: CanvasRenderingContext2D, startX, startY, endX, endY) => {
         ctx.beginPath();
         ctx.moveTo(startX, startY);
@@ -55,4 +56,4 @@ const funStuff = () => {
     drawText(currentContext, 'Check me out!', 100, 100);
 }
 
-window.onload = funStuff;
+window.onload = pageOneStuff;

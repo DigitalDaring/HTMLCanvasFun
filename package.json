@@ -15,9 +15,9 @@
     "last 3 safari versions"
   ],
   "dependencies": {
-    "express": "^4.17.1",
-    "typescript": "^3.5.3",
-    "parcel-bundler": "^1.12.3"
+    "express": "4.17.1",
+    "parcel-bundler": "1.12.3",
+    "typescript": "3.5.3"
   },
   "author": "Edmund Bates",
   "license": "UNLICENSED"

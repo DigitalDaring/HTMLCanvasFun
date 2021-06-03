@@ -2,7 +2,7 @@ import grayScale from './filters/gray-scale';
 import hardRamp from './filters/hard-ramp';
 import solarize from './filters/solarize';
 
-const funStuff = () => {
+const pageSevenStuff = () => {
     const video = document.getElementById('video') as HTMLVideoElement;
     const inputCanvas = document.getElementById('input') as HTMLCanvasElement;
     const outputCanvas = document.getElementById('output') as HTMLCanvasElement;
@@ -98,16 +98,21 @@ const funStuff = () => {
     let hiddenVideo = false;
 
     video.onplay = () => {
-        window.setInterval(() => {
-            if(!video.paused && !video.ended) {
-                video.style.opacity = '0';
-                hiddenVideo = true;
-                outputCanvas.style.opacity = '1';
-            }
-            draw();
-        }, 1000 / 20);
+        if(!video.paused && !video.ended) {
+            video.style.opacity = '0';
+            hiddenVideo = true;
+            outputCanvas.style.opacity = '1';
+        }
     }
+
+    const catchAnimationFrame = () => {
+        setTimeout(() => {
+            window.requestAnimationFrame(catchAnimationFrame);
+        }, 1000/24);
+        draw();
+    };
+    catchAnimationFrame();
 }
 
 
-window.onload = funStuff;
+window.onload = pageSevenStuff;
