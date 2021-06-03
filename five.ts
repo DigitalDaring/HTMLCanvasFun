@@ -5,7 +5,7 @@ import Track from './models/track';
 
 const client_id = process.env.SOUNDCLOUD_CLIENT_ID;
 
-const soundcloudTrackUrl = `http://api.soundcloud.com/tracks/299874613/stream?client_id=${client_id}`;
+const soundcloudTrackUrl = `https://api.soundcloud.com/tracks/299874613/stream?client_id=${client_id}`;
 
 const funStuff = () => {
     const canvas = document.getElementById('draw-on-me') as HTMLCanvasElement;
