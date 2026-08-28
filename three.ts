@@ -1,4 +1,4 @@
-import drawRectangle from './draw/draw-rectangle';
+import {drawRectangle} from './draw/draw-rectangle';
 
 const pageThreeStuff = () => {
     let currentAngle = 0;

@@ -10,4 +10,15 @@ const drawCircle = (ctx: CanvasRenderingContext2D, circle: Circle, reverseAlpha 
     ctx.closePath();
 }
 
-export default drawCircle;
+const drawFilledCircle = (ctx: CanvasRenderingContext2D, x, y, radius, red, green, blue) => {
+    ctx.fillStyle = `rgba(${red},${green},${blue}, 255)`;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.fill();
+    ctx.closePath();
+}
+
+export {
+    drawCircle,
+    drawFilledCircle
+};
