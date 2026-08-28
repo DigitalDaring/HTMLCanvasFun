@@ -1,5 +1,5 @@
 import { Circle } from './models/circle';
-import drawCircle from './draw/draw-circle';
+import { drawCircle } from './draw/draw-circle';
 import wipeTheCanvasClean from './draw/wipe-the-canvas-clean';
 import Track from './models/track';
 
