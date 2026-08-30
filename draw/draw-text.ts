@@ -3,4 +3,9 @@ const drawText = (ctx: CanvasRenderingContext2D, text, x, y) => {
     ctx.fillText(text, x, y);
 }
 
-export default drawText;
+const drawSizedText = (ctx: CanvasRenderingContext2D, text, x, y, size) => {
+    ctx.font = `${size}px Roboto`;
+    ctx.fillText(text, x, y);
+}
+
+export {drawText, drawSizedText};

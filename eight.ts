@@ -1,4 +1,4 @@
-import drawText from './draw/draw-text';
+import {drawText, drawSizedText} from './draw/draw-text';
 import drawLine from './draw/draw-line';
 import {drawRectangle, fillRectangle, fillRectangleNotGrey} from './draw/draw-rectangle';
 import { NumberLiteralType } from 'typescript/lib/typescript';
@@ -39,7 +39,7 @@ const heightMap = [
 ];
 
 // y, x, z
-let pointLightPosition = {x: 0, y: 4, z: 6};
+let pointLightPosition = {x: 0, y: 4, z: 10};
 
 const forEveryTexel = (doThing) => {
     for (let y = 0; y < heightMap.length; y++) {
@@ -66,6 +66,8 @@ type TexelCoordinates = {
     lightAngle: number;
     potentialShadowCasterAngle: number;
     potentialShadowCasterDistance: number;
+    potentialShadowCasterDangle: number;
+    lightDangle: number;
 }
 
 const getQuadrant = (startX, startY, endX, endY) => {
@@ -89,7 +91,7 @@ const drawLineToPotentialShadowCaster = (ctx: CanvasRenderingContext2D, params: 
     drawLine(ctx, params.texelX, params.texelY, params.targetX, params.targetY);
 }
 
-const getPotentialShadowCasters = (texelX, texelY, texelZ, lightX, lightY): Array<TexelCoordinates> => {
+const getPotentialShadowCasters = (texelX, texelY, texelZ, lightX, lightY, lightZ): Array<TexelCoordinates> => {
     const higherPoints: Array<TexelCoordinates> = [];
 
     const startX = Math.min(texelX, lightX);
@@ -106,27 +108,42 @@ const getPotentialShadowCasters = (texelX, texelY, texelZ, lightX, lightY): Arra
                 const lightRun = endX - startX;
                 const lightAngle = Math.atan(lightRun/lightRise);
 
+                const lightDrise = lightZ - texelZ;
+                const lightDrun = Math.sqrt(Math.pow(lightRise,2) + Math.pow(lightRun,2));
+
                 const shadowStartX = Math.min(texelX, shadowCasterX);
                 const shadowStartY = Math.min(texelY, shadowCasterY);
                 const shadowEndX = Math.max(texelX, shadowCasterX);
                 const shadowEndY = Math.max(texelY, shadowCasterY);
 
                 const shadowRise = shadowEndY - shadowStartY;
-                const shadowRun= shadowEndX - shadowStartX;
+                const shadowDrise = shadowCasterZ - texelZ;
+                const shadowRun = shadowEndX - shadowStartX;
                 const shadowAngle = Math.atan(shadowRun/shadowRise);
                 const shadowDistance = Math.sqrt(Math.pow(shadowRise, 2) + Math.pow(shadowRun, 2));
 
-                
+                // okay brain, we've got our zDiff which is the difference in height between the caster and the shadowed texel
+                // and we've got our shadowDistance which is how far it is from the caster to the shadowed texel
+                // we also have our height difference between our point light (sun) and our caster
+                // calculate the angle of the pointLight to the caster as A1
+                // calculate the angle of the caster to the shadowed texel as A2
+                // A2 is shallower than A1 then we aren't shadowed
+
+                const lightDangle = Math.atan(lightDrise/lightDrun);
+                const shadowDangle = Math.atan(shadowDrise/shadowDistance);
 
                 const higherPoint: TexelCoordinates = {
                     x: shadowCasterX,
                     y: shadowCasterY,
-                    z: shadowCasterZ, 
+                    z: shadowCasterZ,
                     lightAngle,
                     potentialShadowCasterAngle: shadowAngle,
-                    potentialShadowCasterDistance: shadowDistance
+                    potentialShadowCasterDistance: shadowDistance,
+                    potentialShadowCasterDangle: shadowDangle,
+                    lightDangle
                 } 
                 higherPoints.push(higherPoint);
+                
             }
         }
     }
@@ -204,7 +221,7 @@ const pageEightStuff = () => {
             //     targetZ: lightZ * sizePerTexel + midpoint
             // });
 
-            const potentialShadowCasters = getPotentialShadowCasters(x, y, z, lightX, lightY);
+            const potentialShadowCasters = getPotentialShadowCasters(x, y, z, lightX, lightY, lightZ);
             ctx.fillStyle = `rgba(0,0,0,255)`;
             //drawText(ctx, `${potentialShadowCasters.length}`, startX + midpoint, startY + midpoint);
 
@@ -225,9 +242,15 @@ const pageEightStuff = () => {
                 const angleDiff = big - lil;
                 const combination = angleDiff * distanceToShadowCaster;
                 if (combination <= .5) {
+                    //&& distanceToShadowCaster < texel.z - z
                     //const greyness = distanceToShadowCaster * 5;
                     //drawText(ctx, `${combination.toFixed(2)}`, startX + midpoint, startY + midpoint);
-                    fillRectangle(ctx, startX, startY, sizePerTexel, sizePerTexel, 0);
+
+                    if (texel.potentialShadowCasterDangle > texel.lightDangle) {
+                        fillRectangle(ctx, startX, startY, sizePerTexel, sizePerTexel, 0);
+                        //drawSizedText(ctx, `s${texel.potentialShadowCasterDangle.toFixed(2)}`, startX + 2, startY + 10, 10);
+                        //drawSizedText(ctx, `l${texel.lightDangle.toFixed(2)}`, startX + 2, startY + 20, 10);
+                    }
                 }
                 
                 // if (angleDiff < 0.15) {
