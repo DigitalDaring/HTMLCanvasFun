@@ -6,7 +6,7 @@ const pageTwoStuff = async () => {
     currentContext.strokeStyle = `rgba(0,0,0,255)`;
 
     const drawImageFromUrl = async (ctx: CanvasRenderingContext2D, imgUrl) =>
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             const img = new window.Image();
             img.addEventListener('load', () => {
                 ctx.drawImage(img, 0, 0);  // specify width + height as well if you want to scale
