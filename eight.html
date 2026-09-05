@@ -8,13 +8,16 @@
         <style>
             html, body {
                 font-family: 'Roboto', sans-serif;
+                max-height: 100vh;
+                overflow: hidden;
             }
         </style>
     </head>
     <body>
         <h1>Height Map</h1>
         <h2>Refresh loop + clearscreen</h2>
-        <canvas id="draw-with-clear" width="640px" height="640px"></canvas>
+        <canvas id="draw-with-clear" width="1152px" height="1632px"></canvas>
+        <canvas id="asset-loader" width="1000" height="1000" style="display: none;"></canvas>
         <script src="eight.ts"></script>
     </body>
 </html>
